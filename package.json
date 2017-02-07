@@ -1,5 +1,5 @@
 {
-  "name": "usco-bounds-utils",
+  "name": "@usco/bounds-utils",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
