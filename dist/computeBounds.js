@@ -37,21 +37,24 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  *}
  */
 function computeBounds(object) {
-  var scale = object.transforms.sca;
+  var scale = object.transforms && object.transforms.sca ? object.transforms.sca : undefined;
   var bbox = (0, _boundingBox2.default)(object.geometry.positions);
-  bbox[0] = bbox[0].map(function (x, i) {
-    return x * scale[i];
-  });
-  bbox[1] = bbox[1].map(function (x, i) {
-    return x * scale[i];
-  });
+  if (scale) {
+    bbox[0] = bbox[0].map(function (x, i) {
+      return x * scale[i];
+    });
+    bbox[1] = bbox[1].map(function (x, i) {
+      return x * scale[i];
+    });
+  }
 
   var center = _glVec2.default.scale(_glVec2.default.create(), _glVec2.default.add(_glVec2.default.create(), bbox[0], bbox[1]), 0.5);
-  var bsph = (0, _boundingSphere2.default)(center, object.geometry.positions) * Math.max.apply(Math, _toConsumableArray(scale));
+  var bsph = (0, _boundingSphere2.default)(center, object.geometry.positions);
   var size = [bbox[1][0] - bbox[0][0], bbox[1][1] - bbox[0][1], bbox[1][2] - bbox[0][2]];
+  var dia = scale ? bsph * Math.max.apply(Math, _toConsumableArray(scale)) : bsph;
 
   return {
-    dia: bsph,
+    dia: dia,
     center: [].concat(_toConsumableArray(center)),
     min: bbox[0],
     max: bbox[1],

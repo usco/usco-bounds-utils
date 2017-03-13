@@ -10,7 +10,27 @@ var _computeBounds2 = _interopRequireDefault(_computeBounds);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _ava2.default)('computeBounds', function (t) {
+(0, _ava2.default)('computeBounds (geometry only)', function (t) {
+  var input = {
+    geometry: {
+      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
+    }
+  };
+
+  var expBounds = {
+    dia: 5.745432971379113,
+    center: [-5, -0.4000000059604645, 2.5],
+    min: [-10, -2.8, 1],
+    max: [0, 2, 4],
+    size: [10, 4.8, 3]
+  };
+
+  var bounds = (0, _computeBounds2.default)(input);
+
+  t.deepEqual(bounds, expBounds);
+});
+
+(0, _ava2.default)('computeBounds (with transforms)', function (t) {
   var input = {
     geometry: {
       positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
