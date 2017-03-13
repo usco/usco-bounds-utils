@@ -6,7 +6,7 @@ import { squaredDistance, vec3 } from 'gl-vec3'
   * @param {array} positions the array/typed array of positions.
   * for now loosely based on three.js implementation
 */
-export default function boundingSphere (center = [0, 0, 0] , positions) {
+export default function boundingSphere (center = [0, 0, 0], positions) {
   if (positions.length === 0) {
     return null
   }
@@ -36,7 +36,7 @@ export default function boundingSphere (center = [0, 0, 0] , positions) {
 /* compute boundingSphere from boundingBox
   for now more or less based on three.js implementation
 */
-export function boundingSphereFromBoundingBox (center = [0, 0, 0] , positions, boundingBox) {
+export function boundingSphereFromBoundingBox (center = [0, 0, 0], positions, boundingBox) {
   if (positions.length === 0) {
     return null
   }

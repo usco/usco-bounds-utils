@@ -1,7 +1,27 @@
 import test from 'ava'
 import computeBounds from './computeBounds'
 
-test('computeBounds', t => {
+test('computeBounds (geometry only)', t => {
+  const input = {
+    geometry: {
+      positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]
+    }
+  }
+
+  const expBounds = {
+    dia: 5.745432971379113,
+    center: [-5, -0.4000000059604645, 2.5],
+    min: [-10, -2.8, 1],
+    max: [0, 2, 4],
+    size: [10, 4.8, 3]
+  }
+
+  const bounds = computeBounds(input)
+
+  t.deepEqual(bounds, expBounds)
+})
+
+test('computeBounds (with transforms)', t => {
   const input = {
     geometry: {
       positions: [0, 2, 1, -10, 2, 1, -2.4, -2.8, 4]

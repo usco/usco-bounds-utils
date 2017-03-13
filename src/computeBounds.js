@@ -19,17 +19,20 @@ import boundingSphere from './boundingSphere'
  *}
  */
 export default function computeBounds (object) {
-  const scale = object.transforms.sca
+  const scale = object.transforms && object.transforms.sca ? object.transforms.sca : undefined
   let bbox = boundingBox(object.geometry.positions)
-  bbox[0] = bbox[0].map((x, i) => x * scale[i])
-  bbox[1] = bbox[1].map((x, i) => x * scale[i])
+  if (scale) {
+    bbox[0] = bbox[0].map((x, i) => x * scale[i])
+    bbox[1] = bbox[1].map((x, i) => x * scale[i])
+  }
 
   const center = vec3.scale(vec3.create(), vec3.add(vec3.create(), bbox[0], bbox[1]), 0.5)
-  const bsph = boundingSphere(center, object.geometry.positions) * Math.max(...scale)
+  const bsph = boundingSphere(center, object.geometry.positions)
   const size = [bbox[1][0] - bbox[0][0], bbox[1][1] - bbox[0][1], bbox[1][2] - bbox[0][2]]
+  const dia = scale ? bsph * Math.max(...scale) : bsph
 
   return {
-    dia: bsph,
+    dia,
     center: [...center],
     min: bbox[0],
     max: bbox[1],
